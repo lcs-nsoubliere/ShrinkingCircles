@@ -40,17 +40,25 @@ struct ShrinkingCirclesRecursively: Shape {
         var path = Path()
         
         //Begin calling the recursive helper
-        let AllThePaths = recursiveHelper(currentDepth: 1)
+        let AllThePaths = recursiveHelper(currentDepth: 1, drawignIn: rect)
         path.addPath(AllThePaths)
         //Return path
         return path
         
     }
     
-    func recursiveHelper(currentDepth: Int) -> Path {
+    func recursiveHelper(currentDepth: Int,
+                         drawignIn rect: CGRect) -> Path {
         
         //Make path
         var path = Path()
+        
+        //Draw the circles for the current depth
+        let j = CGFloat(currentDepth - 1)
+        path.addEllipse(in: CGRect(origin: CGPoint(x: rect.midX - rect.midY + 25 * j, y: 25 * j),
+                                   size: CGSize(width: rect.height - 50 * j, height: rect.height - 50 * j)))
+        //Decide wether or not to call the function again (recurse)
+        
         
         //Return path
         return path
