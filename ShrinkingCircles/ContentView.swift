@@ -7,27 +7,27 @@
 
 import SwiftUI
 
-struct ShrinkingCircles: Shape{
-    
-    func path(in rect: CGRect) -> Path {
-      
-        //Create a path
-        var path = Path()
-        
-        //loop for smaller circles
-        for i in 0...7 {
-            
-            let j = CGFloat(i)
-            
-            path.addEllipse(in: CGRect(origin: CGPoint(x: rect.midX - rect.midY + 25 * j, y: 25 * j),
-                                       size: CGSize(width: rect.height - 50 * j, height: rect.height - 50 * j)))
-        }
-
-
-        //return the path
-        return path
-    }
-}
+//struct ShrinkingCircles: Shape{
+//
+//    func path(in rect: CGRect) -> Path {
+//
+//        //Create a path
+//        var path = Path()
+//
+//        //loop for smaller circles
+//        for i in 0...7 {
+//
+//            let j = CGFloat(i)
+//
+//            path.addEllipse(in: CGRect(origin: CGPoint(x: rect.midX - rect.midY + 25 * j, y: 25 * j),
+//                                       size: CGSize(width: rect.height - 50 * j, height: rect.height - 50 * j)))
+//        }
+//
+//
+//        //return the path
+//        return path
+//    }
+//}
 
 struct ShrinkingCirclesRecursively: Shape {
     
@@ -40,7 +40,7 @@ struct ShrinkingCirclesRecursively: Shape {
         var path = Path()
         
         //Begin calling the recursive helper
-        let AllThePaths = recursiveHelper(currentDepth: 1, drawignIn: rect)
+        let AllThePaths = recursiveHelper(currentDepth: 1, drawingIn: rect)
         path.addPath(AllThePaths)
         //Return path
         return path
@@ -48,7 +48,7 @@ struct ShrinkingCirclesRecursively: Shape {
     }
     
     func recursiveHelper(currentDepth: Int,
-                         drawignIn rect: CGRect) -> Path {
+                         drawingIn rect: CGRect) -> Path {
         
         //Make path
         var path = Path()
@@ -58,7 +58,11 @@ struct ShrinkingCirclesRecursively: Shape {
         path.addEllipse(in: CGRect(origin: CGPoint(x: rect.midX - rect.midY + 25 * j, y: 25 * j),
                                    size: CGSize(width: rect.height - 50 * j, height: rect.height - 50 * j)))
         //Decide wether or not to call the function again (recurse)
-        
+        if currentDepth < desiredDepth {
+            let pathForNextCircle = recursiveHelper(currentDepth: currentDepth + 1, drawingIn: rect)
+          
+            path.addPath(pathForNextCircle)
+        }
         
         //Return path
         return path
@@ -69,10 +73,10 @@ struct ShrinkingCirclesRecursively: Shape {
 struct ContentView: View {
     var body: some View {
         VStack{
-            ShrinkingCircles()
-                .stroke()
+//            ShrinkingCircles()
+//                .stroke()
             
-            ShrinkingCirclesRecursively(desiredDepth: Int)
+            ShrinkingCirclesRecursively(desiredDepth: 4)
                 .stroke()
         }
 
