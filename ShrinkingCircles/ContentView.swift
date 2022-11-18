@@ -15,7 +15,7 @@ struct ShrinkingCircles: Shape{
         var path = Path()
         
         //loop for smaller circles
-        for i in 0...3 {
+        for i in 0...7 {
             
             let j = CGFloat(i)
             
